@@ -19,6 +19,6 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.message = require("./message.js")(sequelize, Sequelize);
+db.messages = require("./message.js")(sequelize, Sequelize);
 
 module.exports = db;
