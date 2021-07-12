@@ -26,14 +26,18 @@ exports.create = (request, response) => {
     });
 };
 
-exports.getAll = (request, response) => {
-  messages.findAll()
+exports.getRoot = (request, response) => {
+  messages.findOne({
+      where: {
+        parentId: null
+      }
+    })
     .then(data => {
       response.send(data);
     })
     .catch(error => {
       response.status(500).send({
-        message: "Error fetching all messages"
+        message: "Error fetching root message"
       });
     });
 };
