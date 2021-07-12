@@ -41,13 +41,17 @@ exports.getAll = (request, response) => {
 exports.getChildren = (request, response) => {
   const id = request.params.id;
 
-  messages.findByPk(id)
-    .then(data => {
+  messages.findAll({
+      where: {
+        parentId: id,
+      },
+    })
+    .then((data) => {
       response.send(data);
     })
-    .catch(error => {
+    .catch((error) => {
       response.status(500).send({
-        message: `Error fetching children of ID '${id}'`
+        message: `Error fetching children of ID '${id}'`,
       });
     });
-}
+};
