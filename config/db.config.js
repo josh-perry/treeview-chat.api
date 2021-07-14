@@ -1,8 +1,4 @@
 module.exports = {
-  HOST: "localhost",
-  USER: "treeviewweb",
-  PASSWORD: "password123",
-  DB: "treeviewchat",
   dialect: "postgres",
   pool: {
     max: 5,

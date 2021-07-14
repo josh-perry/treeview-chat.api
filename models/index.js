@@ -1,7 +1,15 @@
 const dbConfig = require("../config/db.config.js");
+let connectionString;
+
+if (process.env.NODE_ENV === "production") {
+  connectionString = process.env.DATABASE_URL
+}
+else {
+  connectionString = require("../config/db.config.dev.js");
+}
 
 const Sequelize = require("sequelize");
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
+const sequelize = new Sequelize(connectionString, {
   host: dbConfig.HOST,
   dialect: dbConfig.dialect,
   operatorsAliases: false,
