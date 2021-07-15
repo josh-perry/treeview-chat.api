@@ -20,6 +20,14 @@ exports.create = (request, response) => {
     return;
   }
 
+  if (request.body.content.length > 140) {
+    response.status(400).send({
+      message: "Bad request - message content too long"
+    });
+
+    return;
+  }
+
   const message = {
     content: request.body.content,
     parentId: request.params.id
