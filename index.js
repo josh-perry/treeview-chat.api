@@ -1,12 +1,22 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const rateLimit = require("express-rate-limit");
 
 const app = express();
 
 const corsOptions = {
   origin: "http://localhost:8080"
 };
+
+app.set("trust proxy", 1);
+
+const limiter = rateLimit({
+  windowMs: 15*60*1000,
+  max: 150
+});
+
+app.use(limiter);
 
 app.use(cors(corsOptions));
 app.use(bodyParser.json());
