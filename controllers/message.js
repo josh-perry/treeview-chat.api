@@ -1,6 +1,16 @@
 const db = require("../models")
 const messages = db.messages;
 
+function createRoot() {
+  const message = {
+    content: "Root",
+    parentId: null
+  }
+
+  messages.create(message);
+  return message;
+}
+
 exports.create = (request, response) => {
   if (!request.body.content) {
     response.status(400).send({
@@ -33,6 +43,10 @@ exports.getRoot = (request, response) => {
       }
     })
     .then(data => {
+      if (data === null) {
+        response.send(createRoot());
+      }
+
       response.send(data);
     })
     .catch(error => {
