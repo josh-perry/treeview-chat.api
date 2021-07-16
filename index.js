@@ -6,7 +6,10 @@ const rateLimit = require("express-rate-limit");
 const app = express();
 
 const corsOptions = {
-  origin: "http://localhost:8080"
+  origin: [
+    "http://localhost:8080",
+    "https://treeview-chat-web.herokuapp.com"
+  ]
 };
 
 app.set("trust proxy", 1);
