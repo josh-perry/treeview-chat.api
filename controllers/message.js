@@ -1,13 +1,37 @@
 const db = require("../models")
 const messages = db.messages;
 
-function createRoot() {
-  const message = {
+async function createDefaultStickies(parentId) {
+  const defaultStickies = [
+    "Please be nice.",
+    "All messages are wiped at midnight (UTC).",
+    "Find the code on <a href='https://github.com/josh-perry/treeview-chat.web'>GitHub</a>"
+  ];
+
+  defaultStickies.forEach(content => {
+    messages.create({
+      content,
+      parentId,
+      sticky: true
+    });
+  });
+}
+
+async function createRoot() {
+  const message = await messages.create({
     content: "Root",
     parentId: null
-  }
+  });
 
-  messages.create(message);
+  console.log(message)
+
+  createDefaultStickies(message.id);
+
+  await messages.create({
+    content: "Write something!",
+    parentId: message.id
+  });
+
   return message;
 }
 
@@ -68,9 +92,9 @@ exports.getRoot = (request, response) => {
         parentId: null
       }
     })
-    .then(data => {
+    .then(async (data) => {
       if (data === null) {
-        response.send(createRoot());
+        response.send(await createRoot());
       }
 
       response.send(data);
