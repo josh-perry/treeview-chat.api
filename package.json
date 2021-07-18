@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
+    "wipe_db": "node wipe_db.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Josh Perry",
