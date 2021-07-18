@@ -11,7 +11,7 @@ function createRoot() {
   return message;
 }
 
-exports.create = (request, response) => {
+exports.create = async (request, response) => {
   if (!request.body.content) {
     response.status(400).send({
       message: "Bad request - no content provided"
@@ -26,6 +26,24 @@ exports.create = (request, response) => {
     });
 
     return;
+  }
+
+  const parentMessage = await messages.findOne({
+      where: {
+        id: request.params.id
+      }
+    });
+
+  if (parentMessage === null) {
+    response.status(400).send({
+      message: "Bad request - parent message doesn't exist"
+    });
+  }
+
+  if (parentMessage.sticky) {
+    response.status(400).send({
+      message: "Bad request - can't reply to a sticky"
+    });
   }
 
   const message = {
