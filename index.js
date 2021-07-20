@@ -28,12 +28,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const db = require("./models");
 db.sequelize.sync();
 
-app.get("/", (req, res) => {
-  res.json({
-    message: "Hello world!"
-  });
-});
-
 require("./routes/message.js")(app);
 
 const PORT = process.env.PORT || 8081;
